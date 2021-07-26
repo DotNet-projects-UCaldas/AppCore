@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AccesoDatos.Interfaces;
+using AccesoDatos.Modelos;
+using AccesoDatos.Repositorios;
+using AppCore.DTOs;
+using AppCore.Mapeadores;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +17,20 @@ namespace AppCore.Logica
     [ApiController]
     public class VentasController : ControllerBase
     {
+        private readonly IRepositorioVenta _repo;
+        private readonly VentaMapper _mapper;
+        public VentasController(IRepositorioVenta repo, VentaMapper mapeadorVenta)
+        {
+            this._repo = repo;
+            this._mapper = mapeadorVenta;
+        }
+
         // GET: api/<VentasController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<VentaDTO> Get()
         {
-            return new string[] { "value1", "value2" };
+            IEnumerable<VentaDTO> ventas = _mapper.mapearT2T1(_repo.ListarVentas());
+            return ventas;
         }
 
         // GET api/<VentasController>/5
@@ -28,8 +42,10 @@ namespace AppCore.Logica
 
         // POST api/<VentasController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] VentaDTO venta)
         {
+            _repo.AgregarVenta(_mapper.mapearT1T2(venta));
+            return NoContent();
         }
 
         // PUT api/<VentasController>/5

@@ -1,3 +1,8 @@
+using AccesoDatos.DAOs;
+using AccesoDatos.Interfaces;
+using AccesoDatos.Repositorios;
+using AppCore.DTOs;
+using AppCore.Mapeadores;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,7 +31,9 @@ namespace AppCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<IRepositorioCliente, ClienteDAO>();
+            services.AddScoped<IRepositorioVenta, VentaDAO>();
+            services.AddScoped<VentaMapper>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -43,6 +50,7 @@ namespace AppCore
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppCore v1"));
             }
+
 
             app.UseHttpsRedirection();
 

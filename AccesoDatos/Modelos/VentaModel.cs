@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace AppCore.DTOs
+namespace AccesoDatos.Modelos
 {
-    public class VentaDTO
+    public class VentaModel
     {
         public string Id { get; set; }
         public int Valor { get; set; }
         public DateTime Fecha { get; set; }
-        public ClienteDTO Cliente { get; set; }
-        public List<ProductoDTO> Productos { get; set; }
-        public VentaDTO(string id, int valor, DateTime fecha, ClienteDTO cliente, List<ProductoDTO> productos)
+        public ClienteModel Cliente { get; set; }
+        public List<ProductoModel> Productos { get; set; }
+        public VentaModel(int valor, DateTime fecha, ClienteModel cliente, List<ProductoModel> productos)
         {
-            Id = id;
             Valor = valor;
             Fecha = fecha;
             Cliente = cliente;
             Productos = productos;
         }
 
-        public VentaDTO()
+        public VentaModel()
         {
         }
     }
